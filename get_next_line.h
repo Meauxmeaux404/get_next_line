@@ -21,9 +21,9 @@ char	*get_next_line(int fd);
 
 char	*find_nl(const char *s, int c);
 
-size_t	ft_strlen(const char *str);
+int	    ft_strlen(const char *str);
 
-char	*ft_strjoin(char *leftover, char *buf);
+void	ft_strlcat(char *dst, const char *src, int n);
 
 char	*copy_to_next_line(char *leftover);
 

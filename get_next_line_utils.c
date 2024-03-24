@@ -12,11 +12,13 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	c;
+	int	c;
 
 	c = 0;
+	if (!str)
+		return (0);
 	while (str[c] != '\0')
 		c++;
 	return (c);
@@ -29,45 +31,35 @@ char	*find_nl(const char *s, int c)
 
 	i = 0;
 	if (!s)
-		return (NULL);
+		return (0);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char)c)
 		{
 			stuff = (char *)s;
-			return (stuff);
+			return (&*stuff);
 		}
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
-char	*ft_strjoin(char *leftover, char *buf)
+void	ft_strlcat(char *dst, const char *src, int n)
 {
-	char	*ptr;
+	int		dstl;
 	int		i;
-	int		j;
 
-	if (!leftover)
+	i = 0;
+	if (n == 0)
+		return ;
+	dstl = ft_strlen(dst);
+	while (src[i] != '\0')
 	{
-		leftover = (char *)malloc(1);
-		leftover[0] = '\0';
+		dst[dstl] = src[i];
+		dstl++;
+		i++;
 	}
-	if (!leftover || !buf)
-		return (NULL);
-	ptr = malloc((ft_strlen(leftover) + ft_strlen(buf)) + 1);
-	if (!ptr)
-		return (NULL);
-	i = -1;
-	j = 0;
-	if (leftover)
-		while (leftover[++i] != '\0')
-			ptr[i] = leftover[i];
-	while (buf[j] != '\0')
-		ptr[i++] = buf[j++];
-	ptr[ft_strlen(leftover) + ft_strlen(buf)] = '\0';
-	free(leftover);
-	return (ptr);
+	dst[dstl] = '\0';
 }
 
 char	*copy_to_next_line(char *leftover)
@@ -108,11 +100,8 @@ char	*new_leftover(char *leftover)
 	while (leftover[i] && leftover[i] != '\n')
 		i++;
 	if (!leftover[i])
-	{
-		free(leftover);
 		return (NULL);
-	}
-	ptr = (char *)malloc(ft_strlen(leftover) - i + 1);
+	ptr = (char *)malloc((ft_strlen(leftover) - i) + 1);
 	if (!ptr)
 		return (NULL);
 	i++;
@@ -120,6 +109,5 @@ char	*new_leftover(char *leftover)
 	while (leftover[i])
 		ptr[j++] = leftover[i++];
 	ptr[j] = '\0';
-	free(leftover);
 	return (ptr);
 }
